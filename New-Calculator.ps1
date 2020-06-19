@@ -2,7 +2,8 @@
 [CmdletBinding()]
 param (
     $outputfile = "./SuperUseful-Calculator.ps1",
-    [int]$digits = 20
+    [int]$digits = 20,
+    [string]$method
 )
 
 $header = "param (
@@ -15,14 +16,15 @@ $header = "param (
 [int]$j = 1
 
 $header | Out-File -Path $outputfile 
-
-while ($i -le $digits) {
-    while ($j -le $digits) {
-        Add-Content "if (`$inputNumberOne -eq $i -and `$inputNumberTwo -eq $j -and `$symbol -eq `"+`") { Write-Output $($i + $j) }" -Path $outputfile 
-        Add-Content "if (`$inputNumberOne -eq $i -and `$inputNumberTwo -eq $j -and `$symbol -eq `"*`") { Write-Output $($i * $j) }" -Path $outputfile 
-        Add-Content "if (`$inputNumberOne -eq $i -and `$inputNumberTwo -eq $j -and `$symbol -eq `"-`") { Write-Output $($i - $j) }" -Path $outputfile 
-        $j++
+if ($method -eq "if") {
+    while ($i -le $digits) {
+        while ($j -le $digits) {
+            Add-Content "if (`$inputNumberOne -eq $i -and `$inputNumberTwo -eq $j -and `$symbol -eq `"+`") { Write-Output $($i + $j) }" -Path $outputfile 
+            Add-Content "if (`$inputNumberOne -eq $i -and `$inputNumberTwo -eq $j -and `$symbol -eq `"*`") { Write-Output $($i * $j) }" -Path $outputfile 
+            Add-Content "if (`$inputNumberOne -eq $i -and `$inputNumberTwo -eq $j -and `$symbol -eq `"-`") { Write-Output $($i - $j) }" -Path $outputfile 
+            $j++
+        }
+        $i++
+        $j = 1
     }
-    $i++
-    $j = 1
 }
